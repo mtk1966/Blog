@@ -1,0 +1,17 @@
+@model Blog.Mcv.Models.CommentViewModel
+
+<h1>Edit Comment</h1>
+<form asp-action="EditComment" asp-controller="Home" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="CreatedAt" />
+    <input type="hidden" asp-for="UserName" />
+
+    <div class="form-group">
+        <label asp-for="Content">Comment:</label>
+        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+</form>

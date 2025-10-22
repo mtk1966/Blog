@@ -1,0 +1,21 @@
+@model AccountViewModel
+
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-header">
+        Account Information
+    </div>
+    <div class="card-body">
+        <p><strong>User Name:</strong> @Model.Name</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Role:</strong> @Model.Role</p>
+    </div>
+    <div class="card-footer">
+        <a asp-action="NewAccountInformation" class="btn btn-primary">Edit Information</a>
+    </div>
+</div>
