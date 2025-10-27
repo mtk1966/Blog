@@ -3,10 +3,13 @@
 @inject BlogDbContext DbContext
 @model List<BlogTableViewModel>
 <div class="container">
-    <h1 class="mb-4">Blogs</h1>
+
     @if (Model.Count == 0)
     {
-        <div class="alert alert-danger">Blog Not Found!</div>
+        <div class="text-center">
+            <h2>No blogs found.</h2>
+            <p>Try a different search or check back later.</p>
+        </div>
     }
     <div class="row">
         @foreach (var blog in Model)

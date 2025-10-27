@@ -3,7 +3,7 @@
 @using Blog.Data
 @inject BlogDbContext DbContext
 @model List<UserViewModel>
-
+<div class="container">
 <h2 class="white">User Roles Management</h2>
 
 <form asp-controller="Home" asp-action="UserRole" method="get">
@@ -93,3 +93,4 @@ else
         </tbody>
     </table>
 }
+</div>

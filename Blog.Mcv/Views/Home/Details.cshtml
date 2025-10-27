@@ -1,0 +1,79 @@
+﻿@using Blog.Mcv
+@using Blog.Data
+@inject BlogDbContext DbContext
+@model DetailsViewModel
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border p-4">
+                <article>
+                    <header class="mb-4">
+                        <h1 class="fw-bolder mb-1">@Model.Blog.Title</h1>
+                        <div class="text-muted fst-italic mb-2">Posted on @Model.Blog.CreatedAt.ToString("MMMM dd, yyyy") by @Model.Blog.User.UserName</div>
+                    </header>
+                    <section class="mb-5">
+                        @Html.Raw(Model.Blog.Content)
+                    </section>
+                </article>
+            </div>
+            <section class="mb-5">
+                <div class="card mt-3">
+
+                    @if (User.HasPermission("Comments.Create", DbContext))
+                    {
+                        <form asp-controller="Home" asp-action="AddComment" method="post" class="mb-4">
+                            <input type="hidden" name="blogId" value="@Model.Blog.Id" />
+                            <textarea name="content" class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
+                            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                        </form>
+                    }
+
+                    @{
+                        var userId = User.Claims.FirstOrDefault(c => c.Type == System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub)?.Value;
+                    }
+
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="ms-3">
+                                <div class="fw-bold">@comment.UserName</div>
+                                <div>@comment.Content</div>
+                                <small class="text-muted fst-italic">@comment.CreatedAt.ToString("MMMM dd, yyyy")</small>
+
+                                @if (User.HasPermission("Comments.Transactions", DbContext))
+                                {
+                                    <div class="mt-2">
+                                        <a asp-controller="Home" asp-action="EditComment" asp-route-id="@comment.Id" class="btn btn-warning btn-sm">Edit</a>
+                                        <form asp-controller="Home" asp-action="DeleteComment" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                                            <input type="hidden" name="commentId" value="@comment.Id" />
+                                            <input type="hidden" name="blogId" value="@Model.Blog.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">Actions</div>
+                <div class="card-body">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Index</a>
+                    @if (User.HasPermission("Blogs.Edit", DbContext))
+                    {
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Blog.Id" class="btn btn-warning">Edit</a>
+                    }
+                    @if (User.HasPermission("Blogs.Delete", DbContext))
+                    {
+                        <a asp-controller="Home" asp-action="DeleteBlog" asp-route-id="@Model.Blog.Id" class="btn btn-danger">Delete</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

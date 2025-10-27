@@ -6,7 +6,6 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Security.Claims;
 using System.Text;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Serilog'u yapılandır

@@ -1,79 +1,92 @@
-
 @using Blog.Mcv
 @using Blog.Data
 @inject BlogDbContext DbContext
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Blog.Mcv</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Blog.Mcv.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>@ViewData["Title"] - SiliconBlog</title>
     
-    <!-- Google AdSense Ana Script'i (HEAD icinde olmali) -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!-- Google AdSense (optional) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2363172574076886"
      crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SiliconBlog</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
                         @if (User?.Identity?.IsAuthenticated is true)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyBlogs">My Blogs</a>
+                            </li>
                             @if (User.HasPermission("Blogs.Create", DbContext))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AddBlog">Add Blog</a>
-                                </li>
-                            }
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="MyBlogs">My Blogs</a>
-                            </li>
-                            @if (User.HasPermission("Roles.Read", DbContext))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="UserRole">Manage Users & Roles</a>
-                                </li>
-                            }
-                            @if (User.HasPermission("Roles.Create", DbContext))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AddRole">Add New Role</a>
-                                </li>
-                            }
-                            @if (User.HasPermission("LogViewer.View", DbContext))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="LogViewer">Log Viewer</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AddBlog">Add Blog</a>
                                 </li>
                             }
                         }
                     </ul>
+                  @if (User?.Identity?.IsAuthenticated is true)
+                    {
+                        <form class="d-flex" asp-controller="Home" asp-action="Index" method="get">
+                            <input class="form-control me-2" type="search" name="search" placeholder="Search blogs..." aria-label="Search">
+                            <button class="btn btn-outline-light" type="submit">Search</button>
+                        </form>
+                    }
                     <ul class="navbar-nav ms-auto">
                         @if (User?.Identity?.IsAuthenticated is true)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAdmin">
+                                    @if (User.HasPermission("Roles.Read", DbContext))
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="UserRole">Manage Users & Roles</a></li>
+                                    }
+                                    @if (User.HasPermission("Roles.Create", DbContext))
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="AddRole">Add New Role</a></li>
+                                    }
+                                    @if (User.HasPermission("LogViewer.View", DbContext))
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="LogViewer">Log Viewer</a></li>
+                                    }
+                                </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
                             </li>
                         }
                     </ul>
@@ -81,24 +94,28 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
+        <main role="main" class="pb-3">
             @RenderBody()
+        </main>
     </div>
 
-    <footer class="footer text-light mt-auto py-3">
-        <div class="container d-flex justify-content-between align-items-end">
-            <div class="ps-3">
-                <p class="mb-1">&copy; 2025 - Blog.Mcv - All Rights Reserved</p>
+    <footer class="footer text-muted">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0">&copy; 2025 - SiliconBlog</p>
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/siliconmadeacademy" class="social-icon " target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/siliconmadeacademy" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.youtube.com/channel/UCsIgroPOjOFgMjRQd2-qGoA" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
                     <a href="https://www.instagram.com/siliconmadeacademy/" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.linkedin.com/company/siliconmadeacademy/" class="social-icon" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                 </div>
+                <a href="https://jwt.io" target="_blank"><img src="~/jwt.png" alt="JWT Logo" class="footer-logo" /></a>
             </div>
-            <a href="https://jwt.io" class="social-icon" target="_blank"><img src="~/jwt.png" alt="Logo" class="footer-logo" /></a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

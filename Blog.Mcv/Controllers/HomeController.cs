@@ -25,11 +25,19 @@ namespace Blog.Mcv.Controllers
             _logger = logger;
             _dbContext = dbContext;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            var blogs = await _dbContext.Set<BlogsEntity>()
+            var blogsQuery = _dbContext.Set<BlogsEntity>()
                 .Include(b => b.User)
                 .OrderByDescending(b => b.CreatedAt)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                blogsQuery = blogsQuery.Where(b => b.Title.Contains(search));
+            }
+
+            var blogs = await blogsQuery
                 .Take(10)
                 .Select(b => new BlogTableViewModel
                 {
@@ -39,7 +47,6 @@ namespace Blog.Mcv.Controllers
                     CreatedAt = b.CreatedAt
                 })
                 .ToListAsync();
-            _logger.LogInformation("user istek yapti");
             return View(blogs);
         }
 
@@ -236,7 +243,7 @@ namespace Blog.Mcv.Controllers
 
             if (blog is null)
             {
-                return NotFound();
+                return Ok();
             }
 
             var detailsViewModel = new DetailsViewModel
@@ -271,7 +278,7 @@ namespace Blog.Mcv.Controllers
             _dbContext.Add(comment);
             await _dbContext.SaveChangesAsync();
 
-            return RedirectToAction("Detail", new { id = blogId });
+            return RedirectToAction("Details", new { id = blogId });
         }
 
         [HttpPost]
@@ -285,7 +292,7 @@ namespace Blog.Mcv.Controllers
                 await _dbContext.SaveChangesAsync();
             }
 
-            return RedirectToAction("Detail", new { id = blogId });
+            return RedirectToAction("Details", new { id = blogId });
         }
 
         // GET: EditComment
@@ -329,9 +336,9 @@ namespace Blog.Mcv.Controllers
             await _dbContext.SaveChangesAsync();
 
             // Redirect back to the blog detail page
-            return RedirectToAction("Detail", new { id = commentToUpdate.BlogId });
+            return RedirectToAction("Details", new { id = commentToUpdate.BlogId });
         }
-
+        [PermissionAuthorize("Blogs.Delete")]
         public async Task<IActionResult> DeleteBlog([FromRoute] int id)
         {
             var blog = await _dbContext.Set<BlogsEntity>()
@@ -345,24 +352,9 @@ namespace Blog.Mcv.Controllers
             _dbContext.Remove(blog);
             await _dbContext.SaveChangesAsync();
 
-            return RedirectToAction("MyBlogs");
+            return RedirectToAction("Index");
         }
-        [Authorize(Roles = "mod,admin")]
-        public async Task<IActionResult> DeleteBlogMod([FromRoute] int id)
-        {
-            var blog = await _dbContext.Set<BlogsEntity>()
-                .SingleOrDefaultAsync(b => b.Id == id);
 
-            if (blog is null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Remove(blog);
-            await _dbContext.SaveChangesAsync();
-
-            return RedirectToAction("MyBlogs");
-        }
         [PermissionAuthorize("Roles.Read")]
         public async Task<IActionResult> UserRole(string searchString)
         {

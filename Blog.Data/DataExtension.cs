@@ -76,8 +76,43 @@ namespace Blog.Data
                     Content = "Farazi",
                     CreatedAt = DateTime.Now
                 };
+                var blog2 = new BlogsEntity
+                {
+                    UserId = user1.Id,
+                    Title = "Kayra",
+                    Content = "Farazi",
+                    CreatedAt = DateTime.Now
+                };
+                var blog3 = new BlogsEntity
+                {
+                    UserId = user1.Id,
+                    Title = "Kayra",
+                    Content = "Farazi",
+                    CreatedAt = DateTime.Now
+                };
+                var blog4 = new BlogsEntity
+                {
+                    UserId = user1.Id,
+                    Title = "Kayra",
+                    Content = "Farazi",
+                    CreatedAt = DateTime.Now
+                };
+                var blog5 = new BlogsEntity
+                {
+                    UserId = user1.Id,
+                    Title = "Kayra",
+                    Content = "Farazi",
+                    CreatedAt = DateTime.Now
+                };
+                var blog6= new BlogsEntity
+                {
+                    UserId = user1.Id,
+                    Title = "Kayra",
+                    Content = "Farazi",
+                    CreatedAt = DateTime.Now
+                };
 
-                context.Set<BlogsEntity>().Add(blog1);
+                context.Set<BlogsEntity>().AddRange(blog1, blog2, blog3, blog4, blog5, blog6);
 
                 await context.SaveChangesAsync();
             }
