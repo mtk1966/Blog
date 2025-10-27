@@ -52,6 +52,12 @@
                                     <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AddRole">Add New Role</a>
                                 </li>
                             }
+                            @if (User.HasPermission("LogViewer.View", DbContext))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="LogViewer">Log Viewer</a>
+                                </li>
+                            }
                         }
                     </ul>
                     <ul class="navbar-nav ms-auto">

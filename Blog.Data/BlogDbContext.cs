@@ -19,6 +19,7 @@ namespace Blog.Data
         public DbSet<BlogsEntity> Blogs { get; set; } = null!;
         public DbSet<RoleEntity> Roles { get; set; } = null!;
         public DbSet<CommentEntity> Comments { get; set; } = null!;
+        public DbSet<LogEntity> Logs { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

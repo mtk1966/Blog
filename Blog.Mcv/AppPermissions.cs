@@ -20,7 +20,13 @@ namespace Blog.Mcv
             "Roles.Create",
             "Roles.Read",
             "Roles.Edit",
-            "Roles.Delete"
+            "Roles.Delete",
+            "LogViewer.View"
         };
+
+        public static class LogViewer
+        {
+            public const string View = "LogViewer.View";
+        }
     }
 }
