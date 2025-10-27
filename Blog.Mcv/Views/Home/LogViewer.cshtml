@@ -1,0 +1,41 @@
+@using Blog.Mcv.Models.ViewModels
+@model IEnumerable<LogViewModel>
+
+@{
+    ViewData["Title"] = "Log Viewer";
+}
+
+<h1>Log Viewer</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Timestamp</th>
+            <th>Level</th>
+            <th>Message</th>
+            <th>Exception</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var log in Model)
+            {
+                <tr>
+                    <td>@log.Id</td>
+                    <td>@log.TimeStamp?.ToLocalTime()</td>
+                    <td>@log.Level</td>
+                    <td>@log.Message</td>
+                    <td>@log.Exception</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No logs found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

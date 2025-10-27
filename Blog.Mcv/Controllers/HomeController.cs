@@ -9,6 +9,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Linq; // Added
 using System.Text.Json; // Added
+using Blog.Mcv.Models.ViewModels;
+using Blog.Data.Entites;
 
 namespace Blog.Mcv.Controllers
 {
@@ -449,6 +451,25 @@ namespace Blog.Mcv.Controllers
         }
 
 
+
+
+        [PermissionAuthorize(AppPermissions.LogViewer.View)]
+        public async Task<IActionResult> LogViewer()
+        {
+            var logs = await _dbContext.Set<LogEntity>()
+            .OrderByDescending(l => l.TimeStamp)
+            .Take(100)
+            .Select(l => new LogViewModel
+            {
+                Id = l.Id,
+                Message = l.Message,
+                Level = l.Level,
+                TimeStamp = l.TimeStamp,
+                Exception = l.Exception
+            })
+            .ToListAsync();
+            return View(logs);
+        }
 
 
         public int GetUserId()
