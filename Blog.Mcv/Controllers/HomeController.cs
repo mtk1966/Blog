@@ -27,6 +27,7 @@ namespace Blog.Mcv.Controllers
         }
         public async Task<IActionResult> Index(string search)
         {
+            _logger.LogInformation("merhaba");
             var blogsQuery = _dbContext.Set<BlogsEntity>()
                 .Include(b => b.User)
                 .OrderByDescending(b => b.CreatedAt)

@@ -27,7 +27,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.MSSqlServer(
-        connectionString: connectionString,
+        connectionString: "Server=31.57.77.148;Database=blog;User Id=sa;Password=Bafra4642.;TrustServerCertificate=; MultipleActiveResultSets=true;Encrypt=False",
         sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true },
         columnOptions: columnOptions)
     .CreateLogger();
@@ -35,74 +35,73 @@ Log.Logger = new LoggerConfiguration()
 
 Log.Information("Uygulama başlatılıyor...");
 
-    builder.Host.UseSerilog(); // Varsayılan logger yerine Serilog'u kullan
+builder.Host.UseSerilog(); // Varsayılan logger yerine Serilog'u kullan
 
-    // Add services to the container.
-    builder.Services.AddControllersWithViews();
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 
-    builder.Services.AddBlogsSbData(connectionString);
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddBlogsSbData(connectionString);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        ValidateIssuer = true,
+        ValidIssuer = "Blog",
+        ValidateAudience = true,
+        ValidAudience = "MVC",
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"] ?? throw new Exception("Null"))),
+        RoleClaimType = ClaimTypes.Role
+    };
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
         {
-            ValidateIssuer = true,
-            ValidIssuer = "Blog",
-            ValidateAudience = true,
-            ValidAudience = "MVC",
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"] ?? throw new Exception("Null"))),
-            RoleClaimType = ClaimTypes.Role
-        };
-        options.Events = new JwtBearerEvents
+            var accessToken = context.Request.Cookies["access_token"];
+
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        },
+
+        OnChallenge = async context =>
         {
-            OnMessageReceived = context =>
-            {
-                var accessToken = context.Request.Cookies["access_token"];
+            context.HandleResponse();
+            context.Response.Redirect("/Auth/Login");
+            await Task.CompletedTask;
+        },
 
-                if (!string.IsNullOrWhiteSpace(accessToken))
-                {
-                    context.Token = accessToken;
-                }
-                return Task.CompletedTask;
-            },
+    };
+    options.MapInboundClaims = false;
 
-            OnChallenge = async context =>
-            {
-                context.HandleResponse();
-                context.Response.Redirect("/Auth/Login");
-                await Task.CompletedTask;
-            },
+});
 
-        };
-        options.MapInboundClaims = false;
+var app = builder.Build();
 
-    });
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
+}
 
-    var app = builder.Build();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseAuthentication();
+app.UseRouting();
+app.UseAuthorization();
 
-    // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment())
-    {
-        app.UseHsts();
-    }
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DbContext>();
 
-    app.UseHttpsRedirection();
-    app.UseStaticFiles();
-    app.UseAuthentication();
-    app.UseRouting();
-
-    app.UseAuthorization();
-
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-    using (var scope = app.Services.CreateScope())
-    {
-        var services = scope.ServiceProvider;
-        var context = services.GetRequiredService<DbContext>();
-
-        await context.EnsureCreatedAndSeedAsync();
-    }
-    app.Run();
+    await context.EnsureCreatedAndSeedAsync();
+}
+app.Run();
