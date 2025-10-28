@@ -1,6 +1,3 @@
-# mtk1966/Blog
-
-Kişisel bir blog platformu için .NET ile geliştirilmiş bir web uygulaması.
 
 <p align="left">
   <img src="https://img.shields.io/badge/C%23-239120?logo=c-sharp&logoColor=white" alt="C#">
