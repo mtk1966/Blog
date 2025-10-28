@@ -1,17 +1,38 @@
 @model Blog.Mcv.Models.CommentViewModel
 
-<h1>Edit Comment</h1>
-<form asp-action="EditComment" asp-controller="Home" method="post">
+<form class="form" asp-action="EditComment" asp-controller="Home" method="post" autocomplete="off">
+    <div class="control">
+        <h1>Edit Comment</h1>
+    </div>
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="UserId" />
     <input type="hidden" asp-for="CreatedAt" />
     <input type="hidden" asp-for="UserName" />
 
-    <div class="form-group">
-        <label asp-for="Content">Comment:</label>
-        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
+    <div class="control block-cube block-input">
+        <textarea asp-for="Content" placeholder="Comment" rows="5"></textarea>
         <span asp-validation-for="Content" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+    <button class="btn block-cube block-cube-hover" type="submit">
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="text">Save Changes</div>
+    </button>
 </form>

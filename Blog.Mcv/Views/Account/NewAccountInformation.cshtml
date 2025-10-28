@@ -4,36 +4,66 @@
     ViewData["Title"] = "New Account Information";
 }
 
-<h2>New Account Information</h2>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="NewAccountInformation">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class_="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary mt-3" />
-                <a asp-action="Index" class="btn btn-success mt-3">Back to List</a>
-            </div>
-        </form>
+<form class="form" asp-action="NewAccountInformation" autocomplete="off">
+    <div class="control">
+        <h1>New Account Information</h1>
     </div>
-</div>
-
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="control block-cube block-input">
+        <input asp-for="Name" placeholder="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <div class="control block-cube block-input">
+        <input asp-for="Email" placeholder="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <div class="control block-cube block-input">
+        <input asp-for="Password" placeholder="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <button class="btn block-cube block-cube-hover" type="submit">
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="text">Save</div>
+    </button>
+    <div class="credits">
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

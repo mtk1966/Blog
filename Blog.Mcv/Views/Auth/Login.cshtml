@@ -1,35 +1,52 @@
 @model LoginViewModel
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Login</h2>
-                </div>
-                <div class="card-body">
-                    @if (!string.IsNullOrWhiteSpace(ViewBag.Error))
-                    {
-                        <div class="alert alert-danger">@ViewBag.Error</div>
-                    }
-                    <form asp-controller="Auth" asp-action="Login" method="post">
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label">Email</label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label">Password</label>
-                            <input asp-for="Password" class="form-control" type="password" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    <a asp-action="Register">Don't have an account? Register</a>
-                </div>
-            </div>
+<form class="form" asp-controller="Auth" asp-action="Login" method="post" autocomplete="off">
+    <div class="control">
+        <h1>Sign In</h1>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(ViewBag.Error))
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+    <div class="control block-cube block-input">
+        <input asp-for="Email" type="text" placeholder="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
         </div>
     </div>
-</div>
+    <div class="control block-cube block-input">
+        <input asp-for="Password" type="password" placeholder="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <button class="btn block-cube block-cube-hover" type="submit">
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="text">Log In</div>
+    </button>
+    <div class="credits">
+        <a asp-action="Register">Don't have an account? Register</a>
+    </div>
+</form>

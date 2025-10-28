@@ -1,28 +1,45 @@
-﻿@model NewBlogViewModel
+@model NewBlogViewModel
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Add a New Blog</h2>
-                </div>
-                <div class="card-body">
-                    <form asp-controller="Home" asp-action="AddBlog" method="post">
-                        <div class="mb-3">
-                            <label asp-for="Title" class="form-label">Title</label>
-                            <input asp-for="Title" class="form-control" />
-                            <span asp-validation-for="Title" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Content" class="form-label">Content</label>
-                            <textarea asp-for="Content" class="form-control" rows="10"></textarea>
-                            <span asp-validation-for="Content" class="text-danger"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-            </div>
+<form class="form" asp-controller="Home" asp-action="AddBlog" method="post" autocomplete="off">
+    <div class="control">
+        <h1>Add a New Blog</h1>
+    </div>
+    <div class="control block-cube block-input">
+        <input asp-for="Title" type="text" placeholder="Title" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
         </div>
     </div>
-</div>
+    <div class="control block-cube block-input">
+        <textarea asp-for="Content" placeholder="Content" rows="10"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <button class="btn block-cube block-cube-hover" type="submit">
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="text">Submit</div>
+    </button>
+</form>

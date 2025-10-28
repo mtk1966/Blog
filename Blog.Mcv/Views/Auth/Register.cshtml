@@ -1,45 +1,78 @@
 @model RegisterViewModel
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Register</h2>
-                </div>
-                <div class="card-body">
-                    <form asp-controller="Auth" asp-action="Register" method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="mb-3">
-                            <label asp-for="Name" class="form-label">Name</label>
-                            <input asp-for="Name" class="form-control" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label">Email</label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label">Password</label>
-                            <input asp-for="Password" class="form-control" type="password" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
-                            <input asp-for="ConfirmPassword" class="form-control" type="password" />
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Register</button>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    <a asp-action="Login">Already have an account? Login</a>
-                </div>
-            </div>
+<form class="form" asp-controller="Auth" asp-action="Register" method="post" autocomplete="off">
+    <div class="control">
+        <h1>Register</h1>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="control block-cube block-input">
+        <input asp-for="Name" type="text" placeholder="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
         </div>
     </div>
-</div>
+    <div class="control block-cube block-input">
+        <input asp-for="Email" type="text" placeholder="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <div class="control block-cube block-input">
+        <input asp-for="Password" type="password" placeholder="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <div class="control block-cube block-input">
+        <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <button class="btn block-cube block-cube-hover" type="submit">
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="text">Register</div>
+    </button>
+    <div class="credits">
+        <a asp-action="Login">Already have an account? Login</a>
+    </div>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
