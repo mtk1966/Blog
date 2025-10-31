@@ -8,29 +8,24 @@ By `mTk
 
 ---
 
-## 🚀 Proje Hakkında
+🚀 About the Project
+This repository contains the source code for a blog project developed from scratch using the ASP.NET MVC architecture. Its purpose is to create a modern, fast, and manageable content platform.
 
-Bu depo, ASP.NET MVC mimarisi kullanılarak sıfırdan geliştirilen bir blog projesinin kaynak kodlarını barındırmaktadır. Amacı, modern, hızlı ve yönetilebilir bir içerik platformu oluşturmaktır.
+The project also serves as a portfolio, showcasing the work and competencies of the user 'mtk1966' within the .NET ecosystem.
 
-> Proje, "mtk1966" kullanıcısının .NET ekosistemindeki çalışmalarını ve yetkinliklerini sergilediği bir portföy niteliğindedir.
+🌟 Key Features (Planned)
+* **Admin Panel:** An admin interface for post, category, and user management.
+* **Content Management:** Creating, editing, and deleting posts using a rich text editor.
+* **Categorization:** Organizing posts by categories and tags.
+* **SEO-Friendly:** SEO-compliant URL structures and meta tags.
+* **Data-Driven:** Abstraction of database operations through the `Blog.Data` layer.
 
-## 🌟 Temel Özellikler (Planlanan)
+🛠️ Technology Stack
+The core technologies used (or planned for use) in this project include:
+* **Backend:** ASP.NET MVC with C# (.NET Framework or .NET Core)
+* **Data Access:** Entity Framework (Code First or Database First)
+* **Database:** Microsoft SQL Server
+* **Architecture:** N-Tier Architecture (separated into a Data Layer and a Web Layer)
 
- Yönetim Paneli: Yazı, kategori ve kullanıcı yönetimi için bir admin arayüzü.
- İçerik Yönetimi: Zengin metin editörü ile yazı oluşturma, düzenleme ve silme.
- Kategorizasyon: Yazıları kategorilere ve etiketlere göre organize etme.
- SEO Dostu: Arama motorlarına uygun URL yapıları ve meta etiketleri.
- Veri Odaklı: `Blog.Data` katmanı ile veritabanı işlemlerinin soyutlanması.
-
-## 🛠️ Teknoloji Yığını
-
-Bu projede kullanılan (veya kullanılması hedeflenen) temel teknolojiler:
-
- Backend: C# ile ASP.NET MVC (.NET Framework veya .NET Core)
- Veri Erişimi: Entity Framework (Code First veya Database First)
- Veritabanı: Microsoft SQL Server
- Mimari: N-Tier (N Katmanlı) mimari (Data Katmanı ve Web Katmanı olarak ayrılmış)
-
-## 📂 Proje Yapısı
-
-Proje, kurumsal bir ASP.NET projesinin standart katmanlı yapısını takip etmektedir.
+📂 Project Structure
+The project follows the standard layered structure of an enterprise ASP.NET application.
