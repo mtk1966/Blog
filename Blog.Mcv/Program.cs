@@ -27,7 +27,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.MSSqlServer(
-        connectionString: "Server=31.57.77.148;Database=blog;User Id=sa;Password=Bafra4642.;TrustServerCertificate=; MultipleActiveResultSets=true;Encrypt=False",
+        connectionString: ":Server=ServerIp;Database=blog;User Id=sa;Password=ServerPassword.;TrustServerCertificate=; MultipleActiveResultSets=true;Encrypt=False;",
         sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true },
         columnOptions: columnOptions)
     .CreateLogger();
